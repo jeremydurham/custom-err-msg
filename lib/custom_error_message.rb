@@ -17,7 +17,7 @@ module ActiveRecord
       @errors.each_key do |attr|
         @errors[attr].each do |msg|
           next if msg.nil?
-
+          msg = msg.respond_to?(:message) ? msg.message : msg
           if attr == "base"
             full_messages << msg
           elsif msg =~ /^\^/
