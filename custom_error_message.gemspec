@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Easley", "Jeremy Durham"]
-  s.date = %q{2009-12-12}
+  s.date = %q{2010-9-22}
   s.description = %q{This plugin gives you the option to not have your custom validation error message
 prefixed with the attribute name}
   s.email = %q{jeremydurham@gmail.com}
