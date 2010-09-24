@@ -1,25 +1,15 @@
 module ActiveRecord
-  class Errors
-    def full_messages
-      full_messages = []
+  class Error
 
-      @errors.each_key do |attr|
-        @errors[attr].each do |msg|
-          next if msg.nil?
-          msg = msg.respond_to?(:message) ? msg.message : msg
-          if attr == "base"
-            full_messages << msg
-          elsif msg =~ /^\^/
-            full_messages << msg[1..-1]
-          elsif msg.is_a? Proc
-            full_messages << msg.call(@base)
-          else
-            full_messages << @base.class.human_attribute_name(attr) + " " + msg
-          end
-        end
+protected
+
+    def generate_full_message(options = {})
+      if self.message =~ /^\^/
+        keys = ["{{message}}"]
+        options.merge!(:default => self.message[1..-1])
       end
 
-      full_messages
+      I18n.translate(keys.shift, options)
     end
   end
 end
