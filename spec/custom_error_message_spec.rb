@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :user_roles
   has_many :roles, :through => :user_roles
   
+  validates_presence_of :name
   validates_presence_of :email, :message => "^Your email is invalid"
   
   accepts_nested_attributes_for :roles 
@@ -25,21 +26,30 @@ end
 
 require 'custom_error_message'
 
-describe "validating attributes" do
+describe "error messages" do
   before do
     ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
     load File.join(File.dirname(__FILE__), 'db', 'schema.rb')
   end
   
-  it "should return the message specified without a prefix" do
-    @user = User.create
-    @user.errors.full_messages.should include "Your email is invalid"
-  end
-  
-  describe "validating nested attributes" do
-    it "should return the message specified without a prefix" do
-      @user = User.create(:roles_attributes => [{}])
-      @user.errors.full_messages.should include "You must enter a role"
+  describe "with standard messages" do
+    it "should return a standard error message" do
+      @user = User.create
+      @user.errors.full_messages.should include "Name can't be blank"
     end
   end
+  
+  describe "with custom messages" do
+    it "should return the full message specified" do
+      @user = User.create
+      @user.errors.full_messages.should include "Your email is invalid"
+    end
+    
+    describe "on nested attributes" do
+      it "should return the full message specified" do
+        @user = User.create(:roles_attributes => [{}])
+        @user.errors.full_messages.should include "You must enter a role"
+      end
+    end    
+  end  
 end
