@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'rspec'
 require 'active_record'
+require 'custom_error_message'
 
 class User < ActiveRecord::Base
   has_many :user_roles
@@ -23,8 +24,6 @@ class UserRole < ActiveRecord::Base
   belongs_to :role
   belongs_to :user
 end
-
-require 'custom_error_message'
 
 describe "error messages" do
   before do
