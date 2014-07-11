@@ -4,10 +4,10 @@ Custom Error Message
 This plugin gives you the option to not have your custom validation error message 
 prefixed with the attribute name.
 
-Rails 3 and Ruby 1.9
+Rails 4
 --------------------
 
-Custom Error Message is Rails 3 and Ruby 1.9 compatible
+This only works with Rails 4
 
 Usage
 -----

@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = 'custom_error_message'
-  s.version = "1.1.1"
+  s.version = "1.2.1"
   
   s.platform = Gem::Platform::RUBY
   s.authors = ["David Easley", "Jeremy Durham"]

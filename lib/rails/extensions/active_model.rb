@@ -1,31 +1,24 @@
 module ActiveModel
   class Errors
-    def full_messages
-      full_messages = []
+    def full_message(attribute, message)
+      return message if attribute == :base
+      attr_name = attribute.to_s.tr('.', '_').humanize
+      attr_name = @base.class.human_attribute_name(attribute, default: attr_name)
 
-      each do |attribute, messages|
-        messages = Array.wrap(messages)
-        next if messages.empty?
-
-        if attribute == :base
-          messages.each {|m| full_messages << m }
-        else          
-          attr_name = attribute.to_s.gsub('.', '_').humanize
-          attr_name = @base.class.human_attribute_name(attribute, :default => attr_name)
-          options = { :default => "%{attribute} %{message}", :attribute => attr_name }
-
-          
-          messages.each do |m|
-            if m =~ /^\^/
-              full_messages << I18n.t(:"errors.format.full_message", options.merge(:message => m[1..-1], :default => "%{message}"))
-            else        
-              full_messages << I18n.t(:"errors.format", options.merge(:message => m))
-            end
-          end
-        end
+      puts "mmmm: #{message}"
+      if message.start_with?('^')
+        I18n.t(:"errors.format", {
+          default:  "%{message}",
+          attribute: '',
+          message:   message[1..-1]
+        })
+      else
+        I18n.t(:"errors.format", {
+          default:  "%{attribute} %{message}",
+          attribute: attr_name,
+          message:   message
+        })
       end
-
-      full_messages
     end
   end
 end
