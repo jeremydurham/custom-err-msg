@@ -9,6 +9,10 @@ Rails 4
 
 This only works with Rails 4
 
+Installation
+------------
+    gem 'custom_error_message', git: 'https://github.com/thethanghn/custom-err-msg.git'
+
 Usage
 -----
 
