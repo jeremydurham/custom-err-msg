@@ -5,11 +5,11 @@ protected
 
     def generate_full_message(options = {})
       keys = [
-        :"full_messages.#{@message}",
-        :'full_messages.format'
+        "full_messages.#{@message}""full_messages.#{@message}",
+        'full_messages.format''full_messages.format'
       ]
-      
-      if self.message =~ /^\^/
+
+      if self.message.start_with?('^')
         keys.push('{{message}}')
 
         options.merge!(:default => self.message[1..-1])
